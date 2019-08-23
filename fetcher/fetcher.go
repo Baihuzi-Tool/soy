@@ -9,7 +9,10 @@ import (
 	"time"
 )
 
+var rateLimiter = time.Tick(500 * time.Millisecond)
+
 func Fetcher(url string) ([]byte, error) {
+	<-rateLimiter
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 
@@ -20,7 +23,6 @@ func Fetcher(url string) ([]byte, error) {
 	request.Header.Set("CLIENT-IP", ip);
 	request.Header.Set("X-FORWARDED-FOR", ip);
 	request.Header.Set("REMOTE_ADDR", ip);
-
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {

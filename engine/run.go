@@ -31,7 +31,7 @@ func Run(seed ...Request) {
 
 func worker(r Request) (ParserResult, error) {
 	body, err := fetcher.Fetcher(r.Url)
-
+	log.Printf("%s",body)
 	if err != nil {
 		log.Printf("Fetcher: error fetching url %s: %v", r.Url, err)
 		return ParserResult{}, nil
